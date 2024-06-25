@@ -88,15 +88,4 @@ public class ProductController {
     }
 
 
-//    {
-//        "name": "Example Product",
-//            "description": "This is a detailed description of the example product.",
-//            "brand": "ExampleBrand",
-//            "price": 19.99,
-//            "category": "Electronics",
-//            "stockQuantity": 100,
-//            "releaseDate": "2024-04-17",
-//            "productAvailable": true
-//    }
-
 }
