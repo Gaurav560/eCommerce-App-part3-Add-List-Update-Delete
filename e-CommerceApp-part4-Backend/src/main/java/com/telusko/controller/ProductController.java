@@ -42,7 +42,11 @@ public class ProductController {
                                            @RequestPart("imageFile") MultipartFile imageFile) {
         try {
             System.out.println(product.isProductAvailable());
+            System.out.println("actual image size is: "+imageFile.getBytes().length);
             Product savedProduct = productService.createProduct(product, imageFile);
+
+            //size after compression
+            System.out.println("the image size after compression is "+savedProduct.getImageData().length);
             return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,6 +58,10 @@ public class ProductController {
         Product product = productService.getProductById(productId);
         if (product != null && product.getImageData() != null) {
             byte[] imageData = ImageUtils.decompressImage(product.getImageData());
+
+            //size after decompression
+            System.out.println("the image size after decompression is "+imageData.length);
+
             return ResponseEntity.ok()
                     .contentType(MediaType.valueOf(product.getImageType()))
                     .body(imageData);
