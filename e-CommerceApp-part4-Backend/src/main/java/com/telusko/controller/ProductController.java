@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -42,11 +43,11 @@ public class ProductController {
                                            @RequestPart("imageFile") MultipartFile imageFile) {
         try {
             System.out.println(product.isProductAvailable());
-            System.out.println("actual image size is: "+imageFile.getBytes().length);
+            System.out.println("actual image size is: " + imageFile.getBytes().length);
             Product savedProduct = productService.createProduct(product, imageFile);
 
             //size after compression
-            System.out.println("the image size after compression is "+savedProduct.getImageData().length);
+            System.out.println("the image size after compression is " + savedProduct.getImageData().length);
             return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,7 +61,7 @@ public class ProductController {
             byte[] imageData = ImageUtils.decompressImage(product.getImageData());
 
             //size after decompression
-            System.out.println("the image size after decompression is "+imageData.length);
+            System.out.println("the image size after decompression is " + imageData.length);
 
             return ResponseEntity.ok()
                     .contentType(MediaType.valueOf(product.getImageType()))
@@ -95,5 +96,17 @@ public class ProductController {
         }
     }
 
+
+
+    // Method to handle checkout functionality
+    @PostMapping("/checkout")
+    public ResponseEntity<String> checkout(@RequestBody Map<Integer, Integer> productQuantities) {
+        try {
+            productService.checkout(productQuantities);
+            return new ResponseEntity<>("Checkout successful", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

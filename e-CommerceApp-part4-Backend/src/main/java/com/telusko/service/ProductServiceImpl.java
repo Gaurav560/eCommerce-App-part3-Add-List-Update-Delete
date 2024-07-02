@@ -5,9 +5,11 @@ import com.telusko.repo.ProductRepo;
 import com.telusko.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -62,5 +64,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Integer id) {
         productRepo.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void checkout(Map<Integer, Integer> productQuantities) throws Exception {
+        for (Map.Entry<Integer, Integer> entry : productQuantities.entrySet()) {
+            Integer productId = entry.getKey();
+            Integer quantity = entry.getValue();
+
+            Product product = productRepo.findById(productId)
+                    .orElseThrow(() -> new Exception("Product not found with id: " + productId));
+
+            if (product.getStockQuantity() < quantity) {
+                throw new Exception("Product " + product.getName() + " is out of stock.");
+            }
+
+            product.setStockQuantity(product.getStockQuantity() - quantity);
+            productRepo.save(product);
+        }
     }
 }
