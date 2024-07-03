@@ -349,43 +349,40 @@ const Cart = () => {
     const newCartItems = cartItems.filter((item) => item.id !== itemId);
     setCartItems(newCartItems);
   };
-
+  
   const handleCheckout = async () => {
     try {
+      const checkoutData = {};
+  
       for (const item of cartItems) {
-        const { imageUrl, imageName, imageData, imageType, quantity, ...rest } = item;
-        const updatedStockQuantity = item.stockQuantity - item.quantity;
-  
-        const updatedProductData = { ...rest, stockQuantity: updatedStockQuantity };
-        console.log("updated product data", updatedProductData)
-  
-        const cartProduct = new FormData();
-        cartProduct.append("imageFile", cartImage);
-        cartProduct.append(
-          "product",
-          new Blob([JSON.stringify(updatedProductData)], { type: "application/json" })
-        );
-  
-        await axios
-          .put(`http://localhost:8080/api/product/${item.id}`, cartProduct, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            console.log("Product updated successfully:", (cartProduct));
-          })
-          .catch((error) => {
-            console.error("Error updating product:", error);
-          });
+        const { id, quantity } = item; 
+        checkoutData[id] = quantity; 
+        console.log(quantity)
       }
+  
+      console.log("Checkout data:", checkoutData);
+  
+      await axios.post("http://localhost:8080/api/checkout", checkoutData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        alert(response.data);
+      })
+      .catch((error) => {
+        console.error("Error during checkout:", error);
+        alert(error.response.data)
+      });
+  
       clearCart();
       setCartItems([]);
       setShowModal(false);
     } catch (error) {
-      console.log("error during checkout", error);
+      console.log("Error during checkout:", error);
     }
   };
+  
 
   return (
     <div className="cart-container">
