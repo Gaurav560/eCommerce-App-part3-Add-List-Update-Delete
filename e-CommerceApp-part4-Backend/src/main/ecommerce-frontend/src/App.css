@@ -139,10 +139,9 @@ a {
   color: var(--link_color);
 }
 .theme-btn{
-  background-color: var(--btn-bg);
-  color: var(--btn-clr);
   border: 1px solid var(--button-clr);
   margin: 10px;
+  border-radius: 50%;
 }
 .navbar {
   position: fixed;
