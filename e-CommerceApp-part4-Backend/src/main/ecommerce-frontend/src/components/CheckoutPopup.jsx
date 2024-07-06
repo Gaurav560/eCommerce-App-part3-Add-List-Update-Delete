@@ -6,10 +6,10 @@ const CheckoutPopup = ({ show, handleClose, cartItems, totalPrice, handleCheckou
     <div className="checkoutPopup">
    
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
+      <Modal.Header closeButton className='modal-header' >
         <Modal.Title>Checkout</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className='modal-body'>
         <div className="checkout-items">
           {cartItems.map((item) => (
             <div key={item.id} className="checkout-item" style={{ display: 'flex', marginBottom: '10px' }}>
@@ -26,7 +26,7 @@ const CheckoutPopup = ({ show, handleClose, cartItems, totalPrice, handleCheckou
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className='modal-footer'>
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>

@@ -82,7 +82,7 @@ const Product = () => {
             <h5>{product.brand}</h5>
             <p>{product.description}</p>
           </div>
-
+          {/* 
           <div className="product-price">
             <span>{"$" + product.price}</span>
             <button
@@ -93,7 +93,19 @@ const Product = () => {
               disabled={!product.productAvailable}
             >
               {product.productAvailable ? "Add to cart" : "Out of Stock"}
+            </button> */}
+          <div className="product-price">
+            <span>{"$" + product.price}</span>
+            <button
+              className={`cart-btn ${
+                product.stockQuantity === 0 ? "disabled-btn" : ""
+              }`}
+              onClick={handlAddToCart}
+              disabled={product.stockQuantity === 0}
+            >
+              {product.stockQuantity === 0 ? "Out of Stock" : "Add to cart"}
             </button>
+
             <h6>
               Stock Available :{" "}
               <i style={{ color: "green", fontWeight: "bold" }}>
