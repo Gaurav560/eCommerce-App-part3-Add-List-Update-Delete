@@ -20,6 +20,7 @@
   --btn-clr: black;
   --category-hvr: rgb(200, 200, 200);
   --search_result-bg: rgb(239, 239, 239);
+  --modal-backgroundcolor : rgb(62, 62, 62);
 }
 .dark-theme{
   --root_background: #1f1f1f;
@@ -40,6 +41,7 @@
     --btn-clr: white;
     --category-hvr: rgb(115, 115, 115);
     --search_result-bg: rgb(49, 49, 49);
+    --modal-backgroundcolor: rgb(48, 48, 48);
 }
 
 #root {
@@ -122,22 +124,43 @@ h2{
 h3{
   color: var(--para-clr);
 }
-/* h4{
+h4{
   color: var(--para-clr);
-} */
+}
 h5{
   color: var(--para-clr);
 }
 h6{
   color: var(--para-clr);
 }
-p{
+.orderconfirmed p{
   color: var(--para-clr);
 }
 
 a {
   color: var(--link_color);
 }
+
+.modal-header{
+  background-color: var(--modal-backgroundcolor);
+  /* border: none; */
+  color: var(--para-clr) !important;
+  border-bottom-color: #6c6c6c !important ;
+}
+.modal-body{
+  background-color: var(--modal-backgroundcolor);
+  border: none;
+  color: var(--para-clr) !important;
+}
+.modal-footer{
+  background-color: var(--modal-backgroundcolor) !  important;
+  color: var(--para-clr) !important;
+  border-top: none !important;
+}
+.checkout-items p{
+  color: var(--para-clr)!important;
+
+} 
 .theme-btn{
   border: 1px solid var(--button-clr);
   margin: 10px;
@@ -623,7 +646,6 @@ input:focus {
 }
 .total-price {
   width: 83px;
-  /* padding-top: 27px; */
   text-align: center;
   font-size: 16px;
   color: var(--quantity-clr);
@@ -660,7 +682,7 @@ input:focus {
 }
 .total{
 display: flex;
-justify-content: center;
+justify-content: flex-end;
 font-weight: 700;
 color: var(--quantity-clr);
 }
