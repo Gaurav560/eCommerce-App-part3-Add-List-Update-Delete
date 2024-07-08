@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -99,14 +100,16 @@ public class ProductController {
 
 
     // Method to handle checkout functionality
+
     @PostMapping("/checkout")
-    public ResponseEntity<String> checkout(@RequestBody Map<Integer, Integer> productQuantities) {
+    public ResponseEntity<BigDecimal> checkout(@RequestBody Map<Integer, Integer> productQuantities) {
         try {
-            productService.checkout(productQuantities);
-            return new ResponseEntity<>("Checkout successful", HttpStatus.OK);
+            BigDecimal totalPrice = productService.checkout(productQuantities);
+            return ResponseEntity.ok(totalPrice);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
 
 }

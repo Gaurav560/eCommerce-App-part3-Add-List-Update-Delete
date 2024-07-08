@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -66,9 +67,12 @@ public class ProductServiceImpl implements ProductService {
         productRepo.deleteById(id);
     }
 
+
     @Override
     @Transactional
-    public void checkout(Map<Integer, Integer> productQuantities) throws Exception {
+    public BigDecimal checkout(Map<Integer, Integer> productQuantities) throws Exception {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
         for (Map.Entry<Integer, Integer> entry : productQuantities.entrySet()) {
             Integer productId = entry.getKey();
             Integer quantity = entry.getValue();
@@ -80,8 +84,14 @@ public class ProductServiceImpl implements ProductService {
                 throw new Exception("Product " + product.getName() + " is out of stock.");
             }
 
+            BigDecimal productTotalPrice = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+            totalPrice = totalPrice.add(productTotalPrice);
+
             product.setStockQuantity(product.getStockQuantity() - quantity);
             productRepo.save(product);
         }
+
+        return totalPrice;
     }
+
 }
