@@ -6,13 +6,14 @@ import { Button } from 'react-bootstrap';
 import OrderConfirmation from "./OrderConfirmed";
 
 const Cart = () => {
-  const { cart, removeFromCart, clearCart } = useContext(AppContext);
+  const { cart, removeFromCart, clearCart  } = useContext(AppContext);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [cartImage, setCartImage] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [orderValue, setOrderValue] =useState("")
 
   useEffect(() => {
     const fetchImagesAndUpdateCart = async () => {
@@ -104,7 +105,8 @@ const Cart = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log(response.data )
+      console.log(response.data)
+      setOrderValue(response.data)
       setShowModal(false);
       setOrderConfirmed(true);
       setErrorMessage("");
@@ -207,6 +209,7 @@ const Cart = () => {
         show={orderConfirmed}
         handleClose={() => setOrderConfirmed(false)}
         errorMessage={errorMessage}
+        orderValue={orderValue}
       />
     </div>
   );
