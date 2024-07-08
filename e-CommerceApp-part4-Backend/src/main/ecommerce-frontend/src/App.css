@@ -735,3 +735,7 @@ color: var(--quantity-clr);
 .checkoutPopup {
   background-color: var(--body_background) !important;
 }
+.order-value{
+  font-weight: bold ;
+  color: green !important;
+}
