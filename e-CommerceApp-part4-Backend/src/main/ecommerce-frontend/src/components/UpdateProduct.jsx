@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const UpdateProduct = () => {
     productAvailable: false,
     stockQuantity: "",
   });
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -75,6 +78,8 @@ const UpdateProduct = () => {
       .then((response) => {
         console.log("Product updated successfully:", updatedProduct);
         alert("Product updated successfully!");
+        navigate('/')
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error updating product:", error);

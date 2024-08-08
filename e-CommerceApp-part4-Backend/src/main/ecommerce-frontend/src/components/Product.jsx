@@ -6,7 +6,7 @@ import axios from "../axios";
 import UpdateProduct from "./UpdateProduct";
 const Product = () => {
   const { id } = useParams();
-  const { data, addToCart, removeFromCart, cart, refreshData } =
+  const { data, addToCart, removeFromCart, cart } =
     useContext(AppContext);
   const [product, setProduct] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -44,8 +44,8 @@ const Product = () => {
       removeFromCart(id);
       console.log("Product deleted successfully");
       alert("Product deleted successfully");
-      refreshData();
       navigate("/");
+      window.location.reload()
     } catch (error) {
       console.error("Error deleting product:", error);
     }

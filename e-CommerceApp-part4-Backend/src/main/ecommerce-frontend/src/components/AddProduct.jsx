@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -13,7 +14,8 @@ const AddProduct = () => {
     productAvailable: false,
   });
   const [image, setImage] = useState(null);
-
+  
+  const navigate = useNavigate()
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
@@ -42,6 +44,8 @@ const AddProduct = () => {
       .then((response) => {
         console.log("Product added successfully:", response.data);
         alert("Product added successfully");
+        navigate('/')
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error adding product:", error);
